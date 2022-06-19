@@ -1,0 +1,14 @@
+div.community {
+  /*height:800px;*/
+  height:1400px;
+  margin:100px;
+}
+
+.TableHead {
+  background-color: lightgrey;
+}
+
+a {
+	text-decoration: none;
+	color: black;
+}

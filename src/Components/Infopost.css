@@ -1,0 +1,13 @@
+div.infopost {
+  height:1200px;
+  margin:100px;
+}
+
+div.title {
+	text-align: center;
+	color: white;
+	padding: 2px;
+	background-color: #00777d;
+	width: 130px;
+	border-radius: 20px;
+}
