@@ -19,9 +19,6 @@ import Infopost from './Components/Infopost';
 
 import UpdateInfo from './Components/UpdateInfo';
 
-import Login from './Components/Login';
-import SignUp from './Components/SignUP';
-
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import AppBar from '@mui/material/AppBar';
@@ -61,8 +58,6 @@ function App() {
                     <Button component={Link} to="/Community" variant="text" sx={{color:'black', ml:7, mr:5, width: 150, display: {fontWeight:'bold'}}} > 커뮤니티 </Button>
                   </Box>
 
-                  <Button component={Link} to="/Login" variant="contained" sx={{bgcolor: '#474747', mr:1, ml: 12, width: 100}} > 로그인 </Button>
-                  <Button component={Link} to="/SignUp" variant="outlined" sx={{color: '#00777d', border: 2, mr:5, width: 110}}>회원가입</Button>
                 </Toolbar>
               </Container>
             </AppBar>
@@ -86,13 +81,10 @@ function App() {
             <Route path = "/Four" element = { <CrimeTheft /> } />
             <Route path = "/Five" element = { <CrimeViol /> } />
 
-            <Route path = "/Login" element = { <Login /> } />
-            <Route path = "/SignUp" element = { <SignUp /> } />
-
           </Routes>       
 
         <footer className="App-footer">
-          <p>이용약관, 개인정보처리방침</p>
+          <p>서울여자대학교 소프트웨어융합학과 졸업프로젝트</p>
         </footer>
       </div>
     </BrowserRouter>
