@@ -2,8 +2,7 @@ import * as React from 'react';
 import './App.css';
 import * as firebase from "firebase/app";
 import Community from './Components/Community';
-import Main from './Components/Main';
-
+import Main from './Components/DetailMain';
 import CrimeArea from './Components/Data_CrimeArea';
 import CrimeAll from './Components/Data_CrimeAll';
 import CrimeMurder from './Components/Data_CrimeMurder';
@@ -13,11 +12,13 @@ import CrimeTheft from './Components/Data_CrimeTheft';
 import CrimeViol from './Components/Data_CrimeViolence';
 
 import Safepath from './Components/Map';
+
 import WriteInfo from './Components/WriteInfo';
 import WriteMissing from './Components/WriteMissing';
 import Infopost from './Components/Infopost';
-
+import Missingpost from './Components/MissingPost';
 import UpdateInfo from './Components/UpdateInfo';
+import UpdateMissing from './Components/UpdateMissing';
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
@@ -53,8 +54,8 @@ function App() {
                   </Typography>
 
                   <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
-                    <Button component={Link} to="/Data" variant="text" sx={{color:'black', ml: 25, width: 150, display: {fontWeight:'bold'}}} > 메인분석화면 </Button>
-                    <Button component={Link} to="/Safepath"variant="text" sx={{color:'black', ml:7, width: 150, display: {fontWeight:'bold'}}} > 지도/경로추천 </Button>
+                    <Button component={Link} to="/Area" variant="text" sx={{color:'black', ml: 25, width: 150, display: {fontWeight:'bold'}}} > 데이터분석 </Button>
+                    <Button component={Link} to="/Safepath"variant="text" sx={{color:'black', ml:7, width: 150, display: {fontWeight:'bold'}}} > 지도/안전경로 </Button>
                     <Button component={Link} to="/Community" variant="text" sx={{color:'black', ml:7, mr:5, width: 150, display: {fontWeight:'bold'}}} > 커뮤니티 </Button>
                   </Box>
 
@@ -71,9 +72,11 @@ function App() {
             <Route path = "/WriteMissing" element = { <WriteMissing /> } />
             <Route path = "/WriteInfo" element = { <WriteInfo /> } />
             <Route path = "/Community/Infopost/:post_num/Update" element = { <UpdateInfo /> } />
+            <Route path = "/Community/Missingpost/:post_num/Update" element = { <UpdateMissing /> } />
             <Route path="/Community/Infopost/:post_num" element = { <Infopost /> }/>
+            <Route path="/Community/Missingpost/:post_num" element = { <Missingpost /> }/>
 
-            <Route path = "/Data" element = { <CrimeArea/> } />
+            <Route path = "/Area" element = { <CrimeArea/> } />
             <Route path = "/All" element = { <CrimeAll /> } />
             <Route path = "/One" element = { <CrimeMurder /> } />
             <Route path = "/Two" element = { <CrimeBurglar /> } />
@@ -84,7 +87,7 @@ function App() {
           </Routes>       
 
         <footer className="App-footer">
-          <p>서울여자대학교 소프트웨어융합학과 졸업프로젝트</p>
+          <p class='foot_p'><img class='foot_logo' src='img/swulogo.png'/>서울여자대학교 졸업 프로젝트</p>
         </footer>
       </div>
     </BrowserRouter>

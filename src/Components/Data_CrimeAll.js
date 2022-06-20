@@ -13,30 +13,26 @@ import { Link } from "react-router-dom";
 function Data_CrimeAll() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
   	const open = Boolean(anchorEl);
-
   	const handleClick = (event) => {
     	setAnchorEl(event.currentTarget);
   	};
-
   	const handleClose = () => {
 	    setAnchorEl(null);
-	 };
+	};
 
 	const [anchorEl2, setAnchorEl2] = React.useState(null);
   	const open2 = Boolean(anchorEl2);
-
   	const handleClick2 = (event) => {
     	setAnchorEl2(event.currentTarget);
   	};
-
   	const handleClose2 = () => {
     	setAnchorEl2(null);
   	};
 
   	const [change, setChange] = useState(false);
-
 	return(
 		<div className="App">
+
 			<header>
    				<Box sx={{ flexGrow: 1, height: '20vh', mr: 90, mt: 8 }}>
      				<Container maxWidth="sm">
@@ -62,15 +58,19 @@ function Data_CrimeAll() {
 						        anchorEl={anchorEl}
 						        open={open}
 						        onClose={handleClose}
-						        MenuListProps={{'aria-labelledby': 'basic-button'}} >
-						        <MenuItem component={Link} to="/Data/Area" onClick={handleClose}>범죄취약지역</MenuItem>
+						        MenuListProps={{
+						        	'aria-labelledby': 'basic-button'
+						    	}} >
+						        <MenuItem component={Link} to="/Area" onClick={handleClose}>범죄취약지역</MenuItem>
 					       </Menu>
 					       <Menu
 					       		id="basic-menu"
 					         	anchorEl={anchorEl2}
 					         	open={open2}
 					         	onClose={handleClose2}
-					         	MenuListProps={{'aria-labelledby': 'basic-button'}} >
+					         	MenuListProps={{
+					         		'aria-labelledby': 'basic-button'
+					         	}} >
            						<MenuItem component={Link} to="/All" onClick={handleClose2}>전 체</MenuItem>
 					            <MenuItem component={Link} to="/One" onClick={handleClose2}>살 인</MenuItem>
 					            <MenuItem component={Link} to="/Two" onClick={handleClose2}>강 도</MenuItem>
@@ -85,7 +85,7 @@ function Data_CrimeAll() {
      			</Box>
      		</header>
 
-     		<div className="main_box">
+     		<div class="main_box">
      			<div>
      				<Typography
      					variant="h5"
@@ -100,7 +100,8 @@ function Data_CrimeAll() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:2
-			            }}>
+			            }}
+			        >
 			            5대 범죄 합계 데이터
            			</Typography>
            			<Typography
@@ -116,7 +117,8 @@ function Data_CrimeAll() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:3
-			            }}>
+			            }}
+			        >
 			            살인 강도 강간 절도 폭력
            			</Typography>
            			<Typography
@@ -131,7 +133,8 @@ function Data_CrimeAll() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:5
-			            }}>
+			            }}
+			        >
 			            5대 강력 범죄로 분류가 되는 강력범죄이다.
            			</Typography>
            			<Typography
@@ -145,7 +148,8 @@ function Data_CrimeAll() {
 			               	letterSpacing: '.3rem',
 			               	color: 'black',
 			               	textDecoration: 'none'
-			            }}>
+			            }}
+			        >
 			            강력범죄(強力犯罪)는 폭력이나 무기를
            			</Typography>
            			<Typography
@@ -159,7 +163,8 @@ function Data_CrimeAll() {
 			               	letterSpacing: '.3rem',
 			               	color: 'black',
 			               	textDecoration: 'none'
-			            }}>
+			            }}
+			        >
 			            사용하여 저지르는 범죄이다.
            			</Typography>
            			<img class='img_round_box' src='img/crime_all_round1.png' />
@@ -173,6 +178,7 @@ function Data_CrimeAll() {
                     {change && <img class='img_box' src='img/imgcrime_data_2.png' />}
                 </div>
      		</div>
+     		
 		</div>
 	);
 }

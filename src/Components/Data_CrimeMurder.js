@@ -13,28 +13,23 @@ import { Link } from "react-router-dom";
 function Data_CrimeCrimeMurder() {
 	const [anchorEl, setAnchorEl] = React.useState(null);
   	const open = Boolean(anchorEl);
-
   	const handleClick = (event) => {
     	setAnchorEl(event.currentTarget);
   	};
-
   	const handleClose = () => {
 	    setAnchorEl(null);
 	 };
 
 	const [anchorEl2, setAnchorEl2] = React.useState(null);
   	const open2 = Boolean(anchorEl2);
-
   	const handleClick2 = (event) => {
     	setAnchorEl2(event.currentTarget);
   	};
-
   	const handleClose2 = () => {
     	setAnchorEl2(null);
   	};
 
   	const [change, setChange] = useState(false);
-
 	return(
 		<div className="App">
 			<header>
@@ -62,15 +57,19 @@ function Data_CrimeCrimeMurder() {
 						        anchorEl={anchorEl}
 						        open={open}
 						        onClose={handleClose}
-						        MenuListProps={{'aria-labelledby': 'basic-button'}} >
-						        <MenuItem component={Link} to="/Data/Area" onClick={handleClose}>범죄취약지역</MenuItem>
+						        MenuListProps={{
+						        	'aria-labelledby': 'basic-button'
+						        }} >
+						        <MenuItem component={Link} to="/Area" onClick={handleClose}>범죄취약지역</MenuItem>
 					       </Menu>
 					       <Menu
 					       		id="basic-menu"
 					         	anchorEl={anchorEl2}
 					         	open={open2}
 					         	onClose={handleClose2}
-					         	MenuListProps={{'aria-labelledby': 'basic-button'}} >
+					         	MenuListProps={{
+					         		'aria-labelledby': 'basic-button'
+					         	}} >
            						<MenuItem component={Link} to="/All" onClick={handleClose2}>전 체</MenuItem>
 					            <MenuItem component={Link} to="/One" onClick={handleClose2}>살 인</MenuItem>
 					            <MenuItem component={Link} to="/Two" onClick={handleClose2}>강 도</MenuItem>
@@ -84,8 +83,8 @@ function Data_CrimeCrimeMurder() {
      				</Container>
      			</Box>
      		</header>
-
-     		<div className="main_box">
+     		
+     		<div class="main_box">
      			<div>
      				<Typography
      					variant="h5"
@@ -100,7 +99,8 @@ function Data_CrimeCrimeMurder() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:2
-			            }}>
+			            }}
+			        >
 			            강력 범죄: 살인
            			</Typography>
            			<Typography
@@ -116,7 +116,8 @@ function Data_CrimeCrimeMurder() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:3
-			            }}>
+			            }}
+			        >
 			            살인
            			</Typography>
            			<Typography
@@ -131,7 +132,8 @@ function Data_CrimeCrimeMurder() {
 			               	color: 'black',
 			               	textDecoration: 'none',
 			               	mt:5
-			            }}>
+			            }}
+			        >
 			             다른 사람의 목숨을 빼앗는 행위를 말한다.
            			</Typography>
            			<Typography
@@ -145,7 +147,8 @@ function Data_CrimeCrimeMurder() {
 			               	letterSpacing: '.3rem',
 			               	color: 'black',
 			               	textDecoration: 'none'
-			            }}>
+			            }}
+			        >
 			            살인에 대한 처벌은 국가에 따라서는
            			</Typography>
            			<Typography
@@ -159,10 +162,11 @@ function Data_CrimeCrimeMurder() {
 			               	letterSpacing: '.3rem',
 			               	color: 'black',
 			               	textDecoration: 'none'
-			            }}>
+			            }}
+			        >
 			            사형도 행해진다.
            			</Typography>
-           			<img class='img_round_box' src='img/crime_all_round1.png' />
+           			<img class='img_round_box' src='img/crime_all_round2.png' />
            		</div>
            		<div>
                     <ButtonGroup variant="outlined" size="large" aria-label="outlined button group" sx={{mt:4, ml:2}}>
@@ -173,6 +177,7 @@ function Data_CrimeCrimeMurder() {
                     {change && <img class='img_box' src='img/imgcrime_data_4.png' />}
                 </div>
      		</div>
+
 		</div>
 		);
 }

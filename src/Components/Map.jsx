@@ -12,9 +12,6 @@ const Map = () => {
 
   function drawData(data, map) {
     // 지도위에 선은 다 지우기
-    var resultStr = "";
-    var distance = 0;
-    var idx = 1;
     var newData = [];
     var equalData = [];
     var pointId1 = "-1234567";
@@ -33,8 +30,8 @@ const Map = () => {
         }
         var polyline = new Tmapv2.Polyline({
               path: ar_line,
-              strokeColor: "#ff0000", 
-              strokeWeight: 6,
+              strokeColor: "#04B431", 
+              strokeWeight: 5,
               map: map
           });
         new_polyLine.push(polyline);
@@ -72,7 +69,7 @@ const Map = () => {
               url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
               async: false,
               data: {
-                appKey: "l7xxf4d6ce3985d1419b9a268be498b40d48",
+                appKey: "l7xxf92260dcdced4af1a0935ab8005108b4",
                 searchKeyword: searchKeyword,
                 resCoordType: "EPSG3857",
                 reqCoordType: "WGS84GEO",
@@ -185,7 +182,7 @@ const Map = () => {
               url: "https://apis.openapi.sk.com/tmap/pois?version=1&format=json&callback=result",
               async: false,
               data: {
-                appKey: "l7xxf4d6ce3985d1419b9a268be498b40d48",
+                appKey: "l7xxf92260dcdced4af1a0935ab8005108b4",
                 searchKeyword: searchKeyword,
                 resCoordType: "EPSG3857",
                 reqCoordType: "WGS84GEO",
@@ -283,32 +280,11 @@ const Map = () => {
         } //endPoint
       ); //$(#btn_end)
 
-      let marker_s, marker_e, marker, marker2;
-
-      //경로 선 그리기
-      let headers = {};
-      headers["appKey"] = "l7xxf4d6ce3985d1419b9a268be498b40d48";
+      let marker_s, marker_e, marker, marker2, marker3, marker4, marker5, marker6;
 
       $("#btn_select").click(function (key) {
 
-        //사각형
-        var rect = new Tmapv2.Rectangle({
-          bounds: new Tmapv2.LatLngBounds(
-            new Tmapv2.LatLng(
-              marker_s.getPosition()._lat,
-              marker_s.getPosition()._lng
-            ),
-            new Tmapv2.LatLng(
-              marker_e.getPosition()._lat,
-              marker_e.getPosition()._lng
-            )
-          ),
-          strokeColor: "red",
-          fillColor: "yellow",
-          map: map,
-        });
-
-        var bounds2 = new Tmapv2.LatLngBounds(
+        var bounds_ = new Tmapv2.LatLngBounds(
             new Tmapv2.LatLng(
               marker_s.getPosition()._lat,
               marker_s.getPosition()._lng
@@ -319,103 +295,259 @@ const Map = () => {
             )
           )
 
-        var fileName = "cctv_2.csv";
+        // 파출소 데이터 import
+        var fileName = "파출소.csv";
         var latitude = [];
         var longitude= [];
+
         $.ajax({
           url: fileName,
           dataType:'text',
           success: function(data) {
+            var singleRow = [];
+
             for(var count = 0; count < data.length; count++) {
-                var collapse = data.split("\n");
+                var allData = data.split("\n");
               }
-            alert(collapse.length);
-            /*var singleRow = [];
-            var result = [];
-            for(var count = 0; count < data.length; count++) {
-              var collapse = data.split("\n");
-            }
-            for(var count = 0; count < collapse.length; count++) {
+
+            for(var count = 0; count < allData.length; count++) {
                 singleRow = [];
-                singleRow = collapse[count].split("/");
+                singleRow = allData[count].split("/");
                 latitude[count] = singleRow[2];
                 longitude[count] = singleRow[3];
             }
+
+            // 사각형 영역에 포함되어 있는 데이터가 있다면 lat, lng 배열에 그 값을 담음
             var lat = [];
             var lng = [];
             var i = 0;
             for(var count = 0; count < latitude.length; count++) {
-              var tired = new Tmapv2.LatLng(latitude[count],longitude[count]);
-              if(bounds2.contains(tired)) {
+              var confirmData = new Tmapv2.LatLng(latitude[count],longitude[count]);
+              if(bounds_.contains(confirmData)) {
                 lat[i]= latitude[count];
                 lng[i]= longitude[count];
-                //i= i + 1;
+                i= i + 1;
                 break;
               }
             }
-            
-            //경유지 설정
-            marker = new Tmapv2.Marker({
-              position: new Tmapv2.LatLng(lat[0],lng[0]),
-              icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
-              iconSize: new Tmapv2.Size(24, 38),
-              map: map,
-            });
 
-            //경로 그리기
-            let headers = {};
-            headers["appKey"] = "l7xxf4d6ce3985d1419b9a268be498b40d48";
-            var passList = "127.0338631,37.51518948";
+            // cctv 데이터 import
+            var fileName2 = "cctv_2.csv";
 
             $.ajax({
-              type: "POST",
-              headers: headers,
-              url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json", //
-              async: false,
-              contentType: "application/json",
-              data: JSON.stringify({
-                reqCoordType: "WGS84GEO",
-                resCoordType: "WGS84GEO",
-                startName: "출발",
-                startX: String(marker_s.getPosition()._lng),
-                startY: String(marker_s.getPosition()._lat),
-                startTime: "202111121314",
-                passList: passList,
-                endName: "도착",
-                endX: String(marker_e.getPosition()._lng),
-                endY: String(marker_e.getPosition()._lat),
-                searchOption: "0",
-              }),
+              url: fileName2,
+              dataType:'text',
+              success: function(data) {
+                // 변수 초기화
+                latitude = [];
+                longitude = [];
+                singleRow = [];
 
-              success: function (response) {
-                var ptrcl = response;
-                drawData(ptrcl, map);
+                for(var count = 0; count < data.length; count++) {
+                  var allData2 = data.split("\n");
+                }
 
-              },
-              error: function (request, status, error) {
-                console.log(
-                  "code:" +
-                    request.status +
-                    "\n" +
-                    "message:" +
-                    request.responseText +
-                    "\n" +
-                    "error:" +
-                    error
-                );
-              },
-            }); //경로 그리기
-            */
-          }
+                for(var count = 0; count < allData2.length; count++) {
+                    singleRow = allData2[count].split("/");
+                    latitude[count] = singleRow[1];
+                    longitude[count] = singleRow[2];
+                }
+
+                // 사각형 영역에 포함되어 있는 데이터가 있다면 lat, lng 배열에 그 값을 담음
+                for(var count = 0; count < latitude.length; count++) {
+                  var confirmData = new Tmapv2.LatLng(latitude[count],longitude[count]);
+                  if(bounds_.contains(confirmData)) {
+                    lat[i]= latitude[count];
+                    lng[i]= longitude[count];
+                    i= i + 1;
+                  }
+                }
+
+                // 최종 경유지가 1, 2, 3개일 때로 나누어서 최종 경로를 표시함
+                let headers = {};
+                headers["appKey"] = "l7xxf92260dcdced4af1a0935ab8005108b4";
+                
+                if (i==1) {
+                  // 경유지 마커 표시
+                  marker = new Tmapv2.Marker({
+                    position: new Tmapv2.LatLng(lat[0],lng[0]),
+                    icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                    iconSize: new Tmapv2.Size(24, 38),
+                    map: map,
+                  });
+
+                  // 경로 표시 준비 작업
+                  var passList = lng[0]+","+lat[0]; // 경유지 루트가 될 passList 변수
+
+                  $.ajax({
+                    type: "POST",
+                    headers: headers,
+                    url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json", //
+                    async: false,
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                      reqCoordType: "WGS84GEO",
+                      resCoordType: "WGS84GEO",
+                      startName: "출발",
+                      startX: String(marker_s.getPosition()._lng),
+                      startY: String(marker_s.getPosition()._lat),
+                      startTime: "202111121314",
+                      passList: passList,
+                      endName: "도착",
+                      endX: String(marker_e.getPosition()._lng),
+                      endY: String(marker_e.getPosition()._lat),
+                      searchOption: "0",
+                    }),
+
+                    success: function (response) {
+                      var ptrcl = response;
+                      drawData(ptrcl, map); // drawData 함수 호출
+
+                    },
+                    error: function (request, status, error) {
+                      console.log(
+                        "code:" +
+                          request.status +
+                          "\n" +
+                          "message:" +
+                          request.responseText +
+                          "\n" +
+                          "error:" +
+                          error
+                      );
+                    },
+                  }); //경로 그리기
+
+                } else if (i==2) {
+                   marker2 = new Tmapv2.Marker({
+                      position: new Tmapv2.LatLng(lat[0],lng[0]),
+                      icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                      iconSize: new Tmapv2.Size(24, 38),
+                      map: map,
+                    });
+
+                    marker3 = new Tmapv2.Marker({
+                      position: new Tmapv2.LatLng(lat[1],lng[1]),
+                      icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                      iconSize: new Tmapv2.Size(24, 38),
+                      map: map,
+                    });
+
+                    var passList2 = lng[0]+","+lat[0]+"_"+lng[1]+","+lat[1];
+
+                    $.ajax({
+                      type: "POST",
+                      headers: headers,
+                      url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json", //
+                      async: false,
+                      contentType: "application/json",
+                      data: JSON.stringify({
+                        reqCoordType: "WGS84GEO",
+                        resCoordType: "WGS84GEO",
+                        startName: "출발",
+                        startX: String(marker_s.getPosition()._lng),
+                        startY: String(marker_s.getPosition()._lat),
+                        startTime: "202111121314",
+                        passList: passList2,
+                        endName: "도착",
+                        endX: String(marker_e.getPosition()._lng),
+                        endY: String(marker_e.getPosition()._lat),
+                        searchOption: "0",
+                      }),
+
+                      success: function (response) {
+                        var ptrcl = response;
+                        drawData(ptrcl, map); // drawData 함수 호출
+
+                      },
+                      error: function (request, status, error) {
+                        console.log(
+                          "code:" +
+                            request.status +
+                            "\n" +
+                            "message:" +
+                            request.responseText +
+                            "\n" +
+                            "error:" +
+                            error
+                        );
+                      },
+                    }); // 경로 그리기
+
+                  } else {
+                    
+                      marker4 = new Tmapv2.Marker({
+                        position: new Tmapv2.LatLng(lat[0],lng[0]),
+                        icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                        iconSize: new Tmapv2.Size(24, 38),
+                        map: map,
+                      });
+                      
+                      marker5 = new Tmapv2.Marker({
+                        position: new Tmapv2.LatLng(lat[1],lng[1]),
+                        icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                        iconSize: new Tmapv2.Size(24, 38),
+                        map: map,
+                      });
+
+                      marker6 = new Tmapv2.Marker({
+                        position: new Tmapv2.LatLng(lat[2],lng[2]),
+                        icon: "http://tmapapi.sktelecom.com/upload/tmap/marker/pin_b_m_1.png",
+                        iconSize: new Tmapv2.Size(24, 38),
+                        map: map,
+                      });
+
+                      var passList3 = lng[0]+","+lat[0]+"_"+lng[1]+","+lat[1]+"_"+lng[2]+","+lat[2];
+
+                      $.ajax({
+                        type: "POST",
+                        headers: headers,
+                        url: "https://apis.openapi.sk.com/tmap/routes?version=1&format=json", //
+                        async: false,
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                          reqCoordType: "WGS84GEO",
+                          resCoordType: "WGS84GEO",
+                          startName: "출발",
+                          startX: String(marker_s.getPosition()._lng),
+                          startY: String(marker_s.getPosition()._lat),
+                          startTime: "202111121314",
+                          passList: passList3,
+                          endName: "도착",
+                          endX: String(marker_e.getPosition()._lng),
+                          endY: String(marker_e.getPosition()._lat),
+                          searchOption: "0",
+                        }),
+
+                        success: function (response) {
+                          var ptrcl = response;
+                          drawData(ptrcl, map); // drawData 함수 호출
+
+                        },
+                        error: function (request, status, error) {
+                          console.log(
+                            "code:" +
+                              request.status +
+                              "\n" +
+                              "message:" +
+                              request.responseText +
+                              "\n" +
+                              "error:" +
+                              error
+                          );
+                        },
+                      }); // 경로 그리기
+
+                  }
+
+              } // success
+            }); // ajax
+
+          } // success
         }); // ajax
-
       }); // btn_select
 
-      $("#btn_result").click(function (key) {
-        alert("안전경로 공유 버튼 클릭")
-      });
-
-    }, []); //useEffect
+    }, []); // useEffect
 
   return (
     <div className="Map">
@@ -457,10 +589,6 @@ const Map = () => {
             </ul>
           </div>
         </div>
-      </div>
-
-      <div className="result">
-        <button id="btn_result">안전경로 공유하기</button>
       </div>
 
       <div

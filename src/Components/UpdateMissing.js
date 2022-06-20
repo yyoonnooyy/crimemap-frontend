@@ -8,21 +8,22 @@ import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 
-function UpdateInfo() {
+function UpdateMissing() {
 	const { post_num }= useParams();
 
 	const [title, setTitle] = useState("");
 	const [region, setRegion] = useState("");
+	const [name, setName] = useState("");
 	const [content, setContent] = useState("");
 
 	function onClickUpdate() {
     	const fixTime = new Date();
     	const requestOptions = {
 		    method : "PATCH",
-		    body: JSON.stringify({ title, region, content, fixTime }),
+		    body: JSON.stringify({ title, region, name, content, fixTime }),
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/MissingPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	alert('글 수정이 완료되었습니다.');
@@ -38,11 +39,12 @@ function UpdateInfo() {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/MissingPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setTitle(response.title);
 		    	setRegion(response.region);
+		    	setName(response.name);
 		    	setContent(response.content);
 		    },
 		    (error) => {
@@ -56,6 +58,7 @@ function UpdateInfo() {
 			<div className="title">
 				<h2>글 수정</h2>
 			</div>
+
 			<p></p>
 			<Box
 				sx={{
@@ -71,6 +74,7 @@ function UpdateInfo() {
 			<h3 className="title">내용</h3>
 			<Divider sx={{ height: 10,  maxWidth: 1200, bgcolor: "#00777d" }} />
 			<TextField onChange={(event) => setRegion(event.target.value)} sx={{ minWidth: 1200 }} id="outlined-basic" value={region} variant="outlined" />
+			<TextField onChange={(event) => setName(event.target.value)} sx={{ minWidth: 1200 }} id="outlined-basic" value={name} variant="outlined" />
 			<TextField onChange={(event) => setContent(event.target.value)} multiline rows={20} sx={{ minWidth: 1200 }} id="outlined-basic" value={content} variant="outlined" />
 			<Divider sx={{ height: 10,  maxWidth: 1200, bgcolor: "lightgrey" }} />
 
@@ -78,9 +82,9 @@ function UpdateInfo() {
 
 			<Button onClick={ onClickUpdate } component={ Link } to="/Community" variant="contained" sx={{bgcolor: '#00777d', minWidth: 100, ml: 135}} > 수정 완료 </Button>
 			</Box>
+
 		</div>
 	)
-
 }
 
-export default UpdateInfo;
+export default UpdateMissing;

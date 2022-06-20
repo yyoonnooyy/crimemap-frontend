@@ -1,5 +1,4 @@
 div.update {
-  height:1200px;
   margin:100px;
   text-align: left;
 }
@@ -9,7 +8,7 @@ div.title {
 	color: white;
 	padding: 2px;
 	background-color: #00777d;
-	width: 300px;
+	width: 200px;
 	border-radius: 20px;
 }
 

@@ -1,6 +1,4 @@
 div.community {
-  /*height:800px;*/
-  height:1400px;
   margin:100px;
 }
 
@@ -11,4 +9,26 @@ div.community {
 a {
 	text-decoration: none;
 	color: black;
+}
+
+div.title1 {
+	text-align: center;
+	margin-left: 600px;
+	margin-bottom: 30px;
+	color: white;
+	padding: 2px;
+	background-color: #00777d;
+	width: 200px;
+	border-radius: 20px;
+}
+
+div.title2 {
+	text-align: center;
+	margin-left: 600px;
+	margin-top: 50px;
+	color: white;
+	padding: 2px;
+	background-color: #00777d;
+	width: 200px;
+	border-radius: 20px;
 }

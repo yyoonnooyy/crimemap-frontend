@@ -17,76 +17,65 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 
-function Infopost () {
+function MissingPost() {
 	const { post_num } = useParams();
 
 	const [post_title, setTitle] = useState("");
 	const [post_region, setRegion] = useState("");
+	const [post_name, setName] = useState("");
 	const [post_content, setContent] = useState("");
 	const [post_time, setTime] = useState("");
 	const [img_url, setUrl] = useState("");
-	const [flag, setFlag] = useState("");
 
 	useEffect(() => {
-
 		const requestOptions = {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://localhost:8080/MissingPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setTitle(response.title);
 		    	setRegion(response.region);
+		    	setName(response.name);
 		    	setContent(response.content);
 		    	setTime(response.reg_time);
-		    	setFlag(response.flag);
 
-		    	if (response.flag == "Y") {
-			    	const imgId = "info_" + post_num;
-					const requestOptions2 = {
-					    method : "GET",
-					    headers: { "Content-Type":"application/json"}
+			    const imgId = "missing_" + post_num;
+				const requestOptions2 = {
+					method : "GET",
+					headers: { "Content-Type":"application/json"}
+				}
+				fetch("http://localhost:8080/MissingPost/Image/" + imgId, requestOptions2)
+					.then((response) => response.json())
+					.then((response) => {
+						setUrl(response.imgUrl);
+					},
+					(error) => {
+						alert('이미지 불러오기 실패: 다시 한 번 시도해주세요.('+error+')');
 					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/Image/" + imgId, requestOptions2)
-					    .then((response) => response.json())
-					    .then((response) => {
-					    	setUrl(response.imgUrl);
-					    },
-					    (error) => {
-					    	alert('이미지 불러오기 실패: 다시 한 번 시도해주세요.('+error+')');
-					    }
-					);
-				} else {
-					const storage = getStorage();
-					getDownloadURL(ref(storage, `/basic_image.png`))
-				  	.then((url) => {
-				  		setUrl(url);
-				  	});
-				} // else
-		    },
-		    (error) => {
-		    	alert('글 불러오기 실패: 다시 한 번 시도해주세요.('+error+')');
-		    }
+				);
+			},
+			(error) => {
+				alert('글 불러오기 실패: 다시 한 번 시도해주세요.('+error+')');
+			}
 		);
-
 	},[]);
 
-    function onClickDelete() {
-    	if(flag == "Y") {
-			const imgId2 = "info_" + post_num;
+	function onClickDelete() {
+		const imgId2 = "missing_" + post_num;
 			const requestOptions = {
 				method : "DELETE",
 				headers: { "Content-Type":"application/json"}
 			}
-			fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/Image/" + imgId2, requestOptions)
+			fetch("http://localhost:8080/MissingPost/Image/" + imgId2, requestOptions)
 				.then((response) => response.text())
 				.then((response) => {
 					const requestOptions2 = {
 						method : "DELETE",
 						headers: { "Content-Type":"application/json"}
 					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions2)
+					fetch("http://localhost:8080/MissingPost/" + post_num, requestOptions2)
 						.then((response) => response.text())
 						.then((response) => {
 							alert('글 삭제가 완료되었습니다.');
@@ -102,36 +91,20 @@ function Infopost () {
 			);
 
 			const storage = getStorage();
-			const desertRef = (ref(storage, `/info/${post_num}`))
+			const desertRef = (ref(storage, `/missing/${post_num}`))
 			deleteObject(desertRef).then(() => {
 			}).catch((error) => {
 				alert('이미지 삭제 실패(FB): 다시 한 번 시도해주세요.('+error+')');
 			});
-		} else {
-			const requestOptions2 = {
-						method : "DELETE",
-						headers: { "Content-Type":"application/json"}
-					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions2)
-						.then((response) => response.text())
-						.then((response) => {
-							alert('글 삭제가 완료되었습니다.');
-						},
-						(error) => {
-							alert('글 삭제 실패: 다시 한 번 시도해주세요.('+error+')');
-						}
-					);
-		}
-    } // onClickDelete
+	} // onClickDelete
 
 	return (
 		<div className="infopost">
 			<div className="title">
-				<h2>정보 공유</h2>
+				<h2>실종 / 분실</h2>
 			</div>
-		<p></p>
-		<div>
-          </div>
+			<p></p>
+			<div></div>
 			<Box
 				sx={{
 					p: 3,
@@ -147,8 +120,8 @@ function Infopost () {
 			            <TableRow>
 			            	<TableCell align="center">제목</TableCell>
 			                <TableCell align="center">지역</TableCell>
-			                <TableCell align="center">등록일</TableCell>
-			                <TableCell align="center">작성자</TableCell>
+			                <TableCell align="center">이름</TableCell>
+			                <TableCell align="center">최종 등록일</TableCell>
 			            </TableRow>
 			        </TableHead>
 
@@ -158,8 +131,8 @@ function Infopost () {
 			                >
 			                  <TableCell component="th" align="center">{post_title}</TableCell>
 			                  <TableCell align="center">{post_region}</TableCell>
+			                  <TableCell align="center">{post_name}</TableCell>
 			                  <TableCell align="center">{post_time}</TableCell>
-			                  <TableCell align="center">User</TableCell>
 			                </TableRow>
 			        </TableBody>
 
@@ -212,8 +185,9 @@ function Infopost () {
 				</Box>
 
 			</Box>
+
 		</div>
 	)
 }
 
-export default Infopost;
+export default MissingPost;
