@@ -43,7 +43,7 @@ function WriteMissing () {
 		    	body: JSON.stringify({ title, region, name, content, regTime, fixTime }),
 		    	headers: { "Content-Type":"application/json"}
 		  	}
-			fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/MissingPost", requestOptions)
+			fetch("http://3.39.103.11:8080/MissingPost", requestOptions)
 	    		.then((response) => response.json())
 	    		.then((response) => {
 	          		if (response) {
@@ -61,7 +61,7 @@ function WriteMissing () {
 										    body: JSON.stringify({ imgId, imgUrl }),
 										    headers: { "Content-Type":"application/json"}
 										}
-										fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/MissingPost/Image", requestOptions2)
+										fetch("http://3.39.103.11:8080/MissingPost/Image", requestOptions2)
 										    .then((response) => response.text())
 										    .then((response) => {
 										    	if (response) {

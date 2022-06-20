@@ -22,7 +22,7 @@ function UpdateInfo() {
 		    body: JSON.stringify({ title, region, content, fixTime }),
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://3.39.103.11:8080/InfoPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	alert('글 수정이 완료되었습니다.');
@@ -38,7 +38,7 @@ function UpdateInfo() {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://3.39.103.11:8080/InfoPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setTitle(response.title);

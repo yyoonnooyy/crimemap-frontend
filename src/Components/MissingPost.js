@@ -32,7 +32,7 @@ function MissingPost() {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://localhost:8080/MissingPost/" + post_num, requestOptions)
+		fetch("http://3.39.103.11:8080/MissingPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setTitle(response.title);
@@ -46,7 +46,7 @@ function MissingPost() {
 					method : "GET",
 					headers: { "Content-Type":"application/json"}
 				}
-				fetch("http://localhost:8080/MissingPost/Image/" + imgId, requestOptions2)
+				fetch("http://3.39.103.11:8080/MissingPost/Image/" + imgId, requestOptions2)
 					.then((response) => response.json())
 					.then((response) => {
 						setUrl(response.imgUrl);
@@ -68,14 +68,14 @@ function MissingPost() {
 				method : "DELETE",
 				headers: { "Content-Type":"application/json"}
 			}
-			fetch("http://localhost:8080/MissingPost/Image/" + imgId2, requestOptions)
+			fetch("http://3.39.103.11:8080/MissingPost/Image/" + imgId2, requestOptions)
 				.then((response) => response.text())
 				.then((response) => {
 					const requestOptions2 = {
 						method : "DELETE",
 						headers: { "Content-Type":"application/json"}
 					}
-					fetch("http://localhost:8080/MissingPost/" + post_num, requestOptions2)
+					fetch("http://3.39.103.11:8080/MissingPost/" + post_num, requestOptions2)
 						.then((response) => response.text())
 						.then((response) => {
 							alert('글 삭제가 완료되었습니다.');

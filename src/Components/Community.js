@@ -43,7 +43,7 @@ function Community () {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/Community/InfoPost", requestOptions)
+		fetch("http://3.39.103.11:8080/Community/InfoPost", requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setPost(response);
@@ -57,7 +57,7 @@ function Community () {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/Community/Missing", requestOptions2)
+		fetch("http://3.39.103.11:8080/Community/Missing", requestOptions2)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setPost2(response);
@@ -71,7 +71,7 @@ function Community () {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/Community/Image", requestOptions3)
+		fetch("http://3.39.103.11:8080/Community/Image", requestOptions3)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	var count = 0;

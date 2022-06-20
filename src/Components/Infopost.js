@@ -33,7 +33,7 @@ function Infopost () {
 		    method : "GET",
 		    headers: { "Content-Type":"application/json"}
 		}
-		fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions)
+		fetch("http://3.39.103.11:8080/InfoPost/" + post_num, requestOptions)
 		    .then((response) => response.json())
 		    .then((response) => {
 		    	setTitle(response.title);
@@ -48,7 +48,7 @@ function Infopost () {
 					    method : "GET",
 					    headers: { "Content-Type":"application/json"}
 					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/Image/" + imgId, requestOptions2)
+					fetch("http://3.39.103.11:8080/InfoPost/Image/" + imgId, requestOptions2)
 					    .then((response) => response.json())
 					    .then((response) => {
 					    	setUrl(response.imgUrl);
@@ -79,14 +79,14 @@ function Infopost () {
 				method : "DELETE",
 				headers: { "Content-Type":"application/json"}
 			}
-			fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/Image/" + imgId2, requestOptions)
+			fetch("http://3.39.103.11:8080/InfoPost/Image/" + imgId2, requestOptions)
 				.then((response) => response.text())
 				.then((response) => {
 					const requestOptions2 = {
 						method : "DELETE",
 						headers: { "Content-Type":"application/json"}
 					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions2)
+					fetch("http://3.39.103.11:8080/InfoPost/" + post_num, requestOptions2)
 						.then((response) => response.text())
 						.then((response) => {
 							alert('글 삭제가 완료되었습니다.');
@@ -112,7 +112,7 @@ function Infopost () {
 						method : "DELETE",
 						headers: { "Content-Type":"application/json"}
 					}
-					fetch("http://ec2-3-39-103-11.ap-northeast-2.compute.amazonaws.com:8080/InfoPost/" + post_num, requestOptions2)
+					fetch("http://3.39.103.11:8080/InfoPost/" + post_num, requestOptions2)
 						.then((response) => response.text())
 						.then((response) => {
 							alert('글 삭제가 완료되었습니다.');
